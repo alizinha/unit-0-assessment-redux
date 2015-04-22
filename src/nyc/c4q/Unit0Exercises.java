@@ -15,36 +15,41 @@ public class Unit0Exercises {
     public static void main (String args[]) {
         // Use main to test your methods
         print();
+        isMultipleOfX(1, 0);//testing for exception issue by making 'x' equal to 0
+
     }
 
     public static void print() {
         // print out "I'm sorry Dave, I'm afraid I can't let you do that."
-        System.out.println("");
+        System.out.println("I'm sorry Dave, I'm afraid I can't let you do that.");
     }
 
-    public static Object returnPrimitiveBooleanFalse() {
-        return null;
+    public static boolean returnPrimitiveBooleanFalse() {
+        return false;
     }
 
-    public static Object returnPrimitiveInt55Plus44() {
-        return null;
+    public static int returnPrimitiveInt55Plus44() {
+
+        return 55 + 44;
     }
 
-    public static Object returnPrimitiveDouble2Point718() {
+    public static double returnPrimitiveDouble2Point718() {
         // This is the start of a famous mathematical constant.
         // What's that constant?
-        return null;
+        //That constant is 'e' or Euler's number! --Allison
+        double e = 2.718;
+        return e;
     }
 
-    public static Object returnPrimitiveCharASCII35() {
+    public static char returnPrimitiveCharASCII35() {
         // What's the character for the ASCII number 35?
         // Look at an ASCII table and return that character.
         // You can look at the ASCII table at http://www.asciitable.com/
-        return null;
+        return '#';
     }
 
     public static boolean isEven(int n) {
-        return false;
+        return n % 2 == 0;
     }
 
     public static boolean isMultipleOfX(int n, int x) {
@@ -56,23 +61,34 @@ public class Unit0Exercises {
         //      isMultipleOfX(10, 3) == false
         //      isMultipleOfX(28, 7) == true
         // TODO expect a ArithmeticException in Test with x==0
-        return false;
+        if (x == 0) {return false;}
+
+        return n % x == 0;
     }
 
     public static int returnSumOfOddNumbersBetween1And100() {
         // Starts with [1, 3, 5, ...]
         // Ends with   [..., 95, 97, 99]
-      return 0;
+        int sum = 0;
+        for (int i = 1; i < 100; i += 2) {
+            sum += i;
+        }
+      return sum;
     }
 
     public static int returnSumOfTheFirst200MultiplesOf3() {
         // Starts with [0, 3, 6, ...]
         // Ends with   [..., 591, 594, 597]
-      return 0;
+
+        int sum = 0;
+        for (int i = 3; i <= 597; i += 3) {
+            sum += i;
+        }
+        return sum;
     }
 
     public static boolean isEmptyString(String str) {
-        return false;
+        return str == "";
     }
 
     public static String alternateS1AndS2Xtimes(String s1, String s2, int x) {
@@ -84,7 +100,12 @@ public class Unit0Exercises {
         //      alternateS1AndS2Xtimes("abra", "cadabra", 1).equals("abracadabra") == true
         //      alternateS1AndS2Xtimes("abra", "cadabra", 2).equals("abracadabraabracadabra") == true
         //      alternateS1AndS2Xtimes("abra", "cadabra", 3).equals("abracadabraabracadabraabracadabra") == true
-        return "";
+        String repeatedInput = "";
+
+        for (int i = 0; i < x; i++) {
+            repeatedInput += (s1 + s2);
+        }
+        return repeatedInput;
     }
 
     public static String stringSplit(String s, String splitOn) {
@@ -94,12 +115,17 @@ public class Unit0Exercises {
         //      stringSplit("hellogoodbye", "good").equals("hello") == true
         //      stringSplit("fancy seeing you", "there").equals("") == true
         // If the string does not contain split, then return the empty string "".
-        return "";
+        String beenSplit = "";
+
+        if (s.contains(splitOn)) {
+            beenSplit = s.substring(0, s.indexOf(splitOn));
+        }
+        return beenSplit;
     }
 
     public static Singer returnBeyonce() {
       // should return an instance of Singer with the name "Beyonce" and location "USA"
-      return null;
+      return new Singer("Beyonce", "USA");
     }
 
     public static Singer returnSingerChild(Singer s1, Singer s2) {
@@ -107,8 +133,12 @@ public class Unit0Exercises {
       // For example:
       //      Singer queenB = new Singer("Beyonce", "USA");
       //      Singer rihanna = new Singer("Rihanna", "Barbados");
-      //      returnSingerChild(queenB, rihanna) ==> returns an instance of Singer with name "Beyonce" and location "Barbados".
-      return null;
+      //      returnSingerChild(queenB, rihanna) ==> returns an instance of Singer with name "Beyonce" and location
+      //      "Barbados".
+
+        Singer child = new Singer(s1.getName(), s2.getLocation());
+        return child;
+
     }
 
     public static HashMap<String, Singer> returnSingers() {
@@ -118,12 +148,29 @@ public class Unit0Exercises {
         //      key="Bieber",   Singer(name="Bieber",  location="Canada")
         //      key="Drake",    Singer(name="Drake",   location="Canada")
         //      key="Jepsen",   Singer(name="Jepsen",  location="Canada")
-        return null;
+        HashMap<String, Singer> people = new HashMap<String, Singer>();
+        Singer beyonce = new Singer("Beyonce", "USA");
+        Singer jayz = new Singer("Jay-Z", "USA");
+        Singer bieber = new Singer("Bieber", "Canada");
+        Singer drake = new Singer("Drake", "Canada");
+        Singer jepsen = new Singer("Jepsen", "Canada");
+
+        people.put(beyonce.getName(), beyonce);
+        people.put(jayz.getName(), jayz);
+        people.put(bieber.getName(), bieber);
+        people.put(drake.getName(), drake);
+        people.put(jepsen.getName(), jepsen);
+
+        return people;
     }
 
     public static boolean isFromCanada(Singer person) {
-        return false;
+        if (person.getLocation()==null) {
+            return false;
+        }
+        return person.getLocation().equalsIgnoreCase("Canada");
     }
+
 
     public static void changeJayZsLocationToLosAngeles(HashMap<String, Singer> people) {
         // people will have the values of the `returnSingers()` method you filled in previously.
@@ -132,6 +179,8 @@ public class Unit0Exercises {
         //      Singer(name="Jay-Z",   location="USA")
         // new value of Jay-Z:
         //      Singer(name="Jay-Z",   location="Los Angeles")
+        people.get("Jay-Z").setLocation("Los Angeles");
+
     }
 
     public static void removeJepsenFromSingers(HashMap<String, Singer> people){
@@ -140,21 +189,8 @@ public class Unit0Exercises {
         //  ["Beyonce", "Jay-Z", "Bieber", "Drake", "Jepsen"]
         // new keys in `people`:
         //  ["Beyonce", "Jay-Z", "Bieber", "Drake"]
+        people.remove("Jepsen");
 
     }
 
-    // Bonus Problems
-    public static void readFileAndOnlyPrintCanadianCelebrities() {
-        // TODO Use Apache Commons CSV and provide boilerplate for reading the file
-        // https://commons.apache.org/proper/commons-csv/
-      try {
-        FileReader fr = new FileReader("celebrities.csv");
-      } catch (FileNotFoundException e) {
-        e.printStackTrace();
-      }
-    }
-
-    public static void readFileAndPrintCelebrityAges(){
-        // TODO similar as above
-    }
 }
